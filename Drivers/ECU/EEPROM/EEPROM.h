@@ -2,7 +2,7 @@
  * EEPROM.h
  *
  *  Created on: Sep 23, 2023
- *      Author: GTX
+ *      Author: Omar Zakaria
  */
 
 #ifndef INCLUDES_I2C_SLAVE_EEPROM_H_

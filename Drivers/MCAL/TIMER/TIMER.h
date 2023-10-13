@@ -2,7 +2,7 @@
  * TIMER.h
  *
  *  Created on: Sep 17, 2023
- *      Author: GTX
+ *      Author: Omar Zakaria
  */
 
 #ifndef MCAL_TIMER_TIMER_H_

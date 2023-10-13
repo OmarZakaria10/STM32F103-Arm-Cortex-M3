@@ -2,7 +2,7 @@
  * EEPROM.c
  *
  *  Created on: Sep 23, 2023
- *      Author: GTX
+ *      Author: Omar Zakaria
  */
 
 #include "EEPROM.h"

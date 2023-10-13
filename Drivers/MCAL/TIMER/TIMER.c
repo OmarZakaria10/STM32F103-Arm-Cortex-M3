@@ -2,7 +2,7 @@
  * TIMER2.c
  *
  *  Created on: Sep 15, 2023
- *      Author: GTX
+ *      Author: Omar Zakaria
  */
 #include "TIMER.h"
 void PWM(TIMER_t* CONF,uint32_t CH,uint32_t duty_cycle){
