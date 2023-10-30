@@ -6,7 +6,7 @@
 "Drivers/MCAL/I2C/I2C.o"
 "Drivers/MCAL/RCC/RCC.o"
 "Drivers/MCAL/SPI/SPI.o"
-"Drivers/MCAL/TIMER/TIMER.o"
+"Drivers/MCAL/TIMERS/TIMERS.o"
 "Drivers/MCAL/USART/USART.o"
 "Src/app.o"
 "Src/main.o"

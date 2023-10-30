@@ -27,7 +27,7 @@ Drivers/MCAL/GPIO \
 Drivers/MCAL/I2C \
 Drivers/MCAL/RCC \
 Drivers/MCAL/SPI \
-Drivers/MCAL/TIMER \
+Drivers/MCAL/TIMERS \
 Drivers/MCAL/USART \
 Src \
 Startup \

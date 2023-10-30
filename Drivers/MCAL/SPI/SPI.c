@@ -85,6 +85,8 @@ void MCAL_SPI_Init( SPI_Config_t *Config)
 	/* 11. Set Interrupt Type */
 	if(Config->ERRI_INT_EN || Config->RXNE_INT_EN || Config->TXE_INT_EN)
 	{
+		SPI_INT_CALLBACK[0]=Config->SPI1_IRQ_CallBack;
+		SPI_INT_CALLBACK[1]=Config->SPI2_IRQ_CallBack;
 		tempReg_CR2 |= (Config->ERRI_INT_EN <<5) |(Config->RXNE_INT_EN <<6) |(Config->TXE_INT_EN <<7);
 
 		/* 12. Open the global Interrupt for each peripheral */
@@ -213,6 +215,7 @@ void MCAL_SPI_GPIO_Set_Pins(SPI_Config_t *Config)
 			SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_6;
 			SPI_GPIO_Config.GPIO_MODE = GPIO_ALT_OUTPUT_PUSHPULL_MODE;
 			SPI_GPIO_Config.GPIO_Output_Speed = GPIO_SPEED_10M;
+			SPI_GPIO_Config.GPIO_Port = GPIOA;
 			gpio_pin_intialize(&SPI_GPIO_Config);
 
 			/* TODO Full duplex / slave (multi-slave) Alternate function open drain */
@@ -221,6 +224,7 @@ void MCAL_SPI_GPIO_Set_Pins(SPI_Config_t *Config)
 			/* Full duplex / slave Input floating / Input pull-up */
 			SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_7;
 			SPI_GPIO_Config.GPIO_MODE = GPIO_FLOATING_INPUT_MODE;
+			SPI_GPIO_Config.GPIO_Port = GPIOA;
 			gpio_pin_intialize(&SPI_GPIO_Config);		}
 	}
 	else if(Config->SPIx == SPI2)
@@ -235,6 +239,7 @@ void MCAL_SPI_GPIO_Set_Pins(SPI_Config_t *Config)
 					/* Hardware Master/Slave Input Floating */
 					SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_12;
 					SPI_GPIO_Config.GPIO_MODE = GPIO_FLOATING_INPUT_MODE;
+					SPI_GPIO_Config.GPIO_Port = GPIOB;
 					gpio_pin_intialize(&SPI_GPIO_Config);
 					break;
 
@@ -244,6 +249,7 @@ void MCAL_SPI_GPIO_Set_Pins(SPI_Config_t *Config)
 					SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_12;
 					SPI_GPIO_Config.GPIO_MODE = GPIO_ALT_OUTPUT_PUSHPULL_MODE;
 					SPI_GPIO_Config.GPIO_Output_Speed = GPIO_SPEED_10M;
+					SPI_GPIO_Config.GPIO_Port = GPIOB;
 					gpio_pin_intialize(&SPI_GPIO_Config);
 					break;
 			}
@@ -253,12 +259,14 @@ void MCAL_SPI_GPIO_Set_Pins(SPI_Config_t *Config)
 			SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_13;
 			SPI_GPIO_Config.GPIO_MODE = GPIO_ALT_OUTPUT_PUSHPULL_MODE;
 			SPI_GPIO_Config.GPIO_Output_Speed = GPIO_SPEED_10M;
+			SPI_GPIO_Config.GPIO_Port = GPIOB;
 			gpio_pin_intialize(&SPI_GPIO_Config);
 
 			/* PB14 : SPI2_MISO */
 			/* Full duplex / master Input floating / Input pull-up */
 			SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_14;
 			SPI_GPIO_Config.GPIO_MODE = GPIO_FLOATING_INPUT_MODE;
+			SPI_GPIO_Config.GPIO_Port = GPIOB;
 			gpio_pin_intialize(&SPI_GPIO_Config);
 
 			/* PB15 : SPI2_MOSI */
@@ -266,6 +274,7 @@ void MCAL_SPI_GPIO_Set_Pins(SPI_Config_t *Config)
 			SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_15;
 			SPI_GPIO_Config.GPIO_MODE = GPIO_ALT_OUTPUT_PUSHPULL_MODE;
 			SPI_GPIO_Config.GPIO_Output_Speed = GPIO_SPEED_10M;
+			SPI_GPIO_Config.GPIO_Port = GPIOB;
 			gpio_pin_intialize(&SPI_GPIO_Config);
 		}
 		else /* Slave */
@@ -276,6 +285,7 @@ void MCAL_SPI_GPIO_Set_Pins(SPI_Config_t *Config)
 				/* Hardware Master/Slave Input Floating */
 				SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_12;
 				SPI_GPIO_Config.GPIO_MODE = GPIO_FLOATING_INPUT_MODE;
+				SPI_GPIO_Config.GPIO_Port = GPIOB;
 				gpio_pin_intialize(&SPI_GPIO_Config);
 			}
 
@@ -283,6 +293,7 @@ void MCAL_SPI_GPIO_Set_Pins(SPI_Config_t *Config)
 			/* Slave Input floating */
 			SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_13;
 			SPI_GPIO_Config.GPIO_MODE = GPIO_FLOATING_INPUT_MODE;
+			SPI_GPIO_Config.GPIO_Port = GPIOB;
 			gpio_pin_intialize(&SPI_GPIO_Config);
 
 			/* PB14 : SPI2_MISO */
@@ -290,6 +301,7 @@ void MCAL_SPI_GPIO_Set_Pins(SPI_Config_t *Config)
 			SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_14;
 			SPI_GPIO_Config.GPIO_MODE = GPIO_ALT_OUTPUT_PUSHPULL_MODE;
 			SPI_GPIO_Config.GPIO_Output_Speed = GPIO_SPEED_10M;
+			SPI_GPIO_Config.GPIO_Port = GPIOB;
 			gpio_pin_intialize(&SPI_GPIO_Config);
 
 			/* TODO Full duplex / slave (multi-slave) Alternate function open drain */
@@ -298,6 +310,7 @@ void MCAL_SPI_GPIO_Set_Pins(SPI_Config_t *Config)
 			/* Full duplex / slave Input floating / Input pull-up */
 			SPI_GPIO_Config.GPIO_PinNumber = GPIO_PIN_15;
 			SPI_GPIO_Config.GPIO_MODE = GPIO_FLOATING_INPUT_MODE;
+			SPI_GPIO_Config.GPIO_Port = GPIOB;
 			gpio_pin_intialize(&SPI_GPIO_Config);
 		}
 	}
@@ -324,7 +337,7 @@ void MCAL_SPI_Send_Data(SPI_Config_t *Config, uint16_t *pTxBuffer, enum Polling_
 	}
 
 	/* Start transmission, Write data to SPI data register */
-	Config->SPIx->SPI_DR = *(pTxBuffer);
+	Config->SPIx->SPI_DR = (*pTxBuffer);
 }
 /* ================================================================
  * @Fn 				- MCAL_SPI_Recieve_Data

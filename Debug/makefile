@@ -11,7 +11,7 @@ RM := rm -rf
 -include Startup/subdir.mk
 -include Src/subdir.mk
 -include Drivers/MCAL/USART/subdir.mk
--include Drivers/MCAL/TIMER/subdir.mk
+-include Drivers/MCAL/TIMERS/subdir.mk
 -include Drivers/MCAL/SPI/subdir.mk
 -include Drivers/MCAL/RCC/subdir.mk
 -include Drivers/MCAL/I2C/subdir.mk
@@ -39,24 +39,24 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-STM32F103C6.elf \
+STM32F103XX.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-STM32F103C6.list \
+STM32F103XX.list \
 
 OBJCOPY_BIN += \
-STM32F103C6.bin \
+STM32F103XX.bin \
 
 
 # All Target
-all: STM32F103C6.elf secondary-outputs
+all: STM32F103XX.elf secondary-outputs
 
 # Tool invocations
-STM32F103C6.elf: $(OBJS) $(USER_OBJS) C:\Users\GTX\STM32CubeIDE\workspace_1.4.0\STM32F103C6\STM32F103C6TX_FLASH.ld
-	arm-none-eabi-gcc  -gdwarf-2 -o "STM32F103C6.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\GTX\STM32CubeIDE\workspace_1.4.0\STM32F103C6\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32F103C6.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+STM32F103XX.elf: $(OBJS) $(USER_OBJS) E:\Git\STM32F103-Arm\ Cortex\ M3\STM32F103-Arm-Cortex-M3\STM32F103C6TX_FLASH.ld
+	arm-none-eabi-gcc  -gdwarf-2 -o "STM32F103XX.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"E:\Git\STM32F103-Arm Cortex M3\STM32F103-Arm-Cortex-M3\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32F103XX.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -65,13 +65,13 @@ default.size.stdout: $(EXECUTABLES)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-STM32F103C6.list: $(EXECUTABLES)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "STM32F103C6.list"
+STM32F103XX.list: $(EXECUTABLES)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "STM32F103XX.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-STM32F103C6.bin: $(EXECUTABLES)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "STM32F103C6.bin"
+STM32F103XX.bin: $(EXECUTABLES)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "STM32F103XX.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 
